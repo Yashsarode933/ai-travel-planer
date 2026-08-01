@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Trip {
+  id          String    @id @default(cuid())
+  destination String
+  budgetTier  BudgetTier
+  days        Int
+  interests   String?
+  travelDates String?
+  currency    String
+  totalEstimatedCost Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  places       Place[]
+  restaurants  Restaurant[]
+  itinerary    Itinerary[]
+}
+
+model Place {
+  id                     String   @id @default(cuid())
+  name                   String
+  category               String
+  description            String?
+  estimatedCost          Float
+  estimatedDurationMinutes Int
+  tags                   String?
+  rating                 Float?
+  reviewCount            Int?
+  lat                    Float?
+  lng                    Float?
+  photoRef               String?
+  openingHours           String?
+  address                String?
+  tripId                 String
+  trip                   Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Restaurant {
+  id          String   @id @default(cuid())
+  name        String
+  cuisine     String
+  description String?
+  priceRange  PriceRange
+  mealType    MealType
+  rating      Float?
+  reviewCount Int?
+  lat         Float?
+  lng         Float?
+  photoRef    String?
+  openingHours String?
+  address     String?
+  tripId      String
+  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Itinerary {
+  id              String  @id @default(cuid())
+  day             Int
+  morningType     String // "place" or "restaurant"
+  morningRefId    String
+  morningNotes    String?
+  afternoonType   String // "place" or "restaurant"
+  afternoonRefId  String
+  afternoonNotes  String?
+  eveningType     String // "place" or "restaurant"
+  eveningRefId    String
+  eveningNotes    String?
+  tripId          String
+  trip            Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+enum BudgetTier {
+  budget
+  mid_range
+  luxury
+}
+
+enum PriceRange {
+  ONE
+  TWO
+  THREE
+  FOUR
+}
+
+enum MealType {
+  breakfast
+  lunch
+  dinner
+}
