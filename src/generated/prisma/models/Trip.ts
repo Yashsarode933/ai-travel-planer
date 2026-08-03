@@ -47,6 +47,7 @@ export type TripMinAggregateOutputType = {
   totalEstimatedCost: number | null
   shareToken: string | null
   isPublic: boolean | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -63,6 +64,7 @@ export type TripMaxAggregateOutputType = {
   totalEstimatedCost: number | null
   shareToken: string | null
   isPublic: boolean | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -79,6 +81,7 @@ export type TripCountAggregateOutputType = {
   totalEstimatedCost: number
   shareToken: number
   isPublic: number
+  notes: number
   createdAt: number
   updatedAt: number
   userId: number
@@ -107,6 +110,7 @@ export type TripMinAggregateInputType = {
   totalEstimatedCost?: true
   shareToken?: true
   isPublic?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -123,6 +127,7 @@ export type TripMaxAggregateInputType = {
   totalEstimatedCost?: true
   shareToken?: true
   isPublic?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -139,6 +144,7 @@ export type TripCountAggregateInputType = {
   totalEstimatedCost?: true
   shareToken?: true
   isPublic?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -242,6 +248,7 @@ export type TripGroupByOutputType = {
   totalEstimatedCost: number
   shareToken: string | null
   isPublic: boolean
+  notes: string | null
   createdAt: Date
   updatedAt: Date
   userId: string | null
@@ -281,6 +288,7 @@ export type TripWhereInput = {
   totalEstimatedCost?: Prisma.FloatFilter<"Trip"> | number
   shareToken?: Prisma.StringNullableFilter<"Trip"> | string | null
   isPublic?: Prisma.BoolFilter<"Trip"> | boolean
+  notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   userId?: Prisma.StringNullableFilter<"Trip"> | string | null
@@ -301,6 +309,7 @@ export type TripOrderByWithRelationInput = {
   totalEstimatedCost?: Prisma.SortOrder
   shareToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -324,6 +333,7 @@ export type TripWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"Trip"> | string
   totalEstimatedCost?: Prisma.FloatFilter<"Trip"> | number
   isPublic?: Prisma.BoolFilter<"Trip"> | boolean
+  notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   userId?: Prisma.StringNullableFilter<"Trip"> | string | null
@@ -344,6 +354,7 @@ export type TripOrderByWithAggregationInput = {
   totalEstimatedCost?: Prisma.SortOrder
   shareToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -368,6 +379,7 @@ export type TripScalarWhereWithAggregatesInput = {
   totalEstimatedCost?: Prisma.FloatWithAggregatesFilter<"Trip"> | number
   shareToken?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
   isPublic?: Prisma.BoolWithAggregatesFilter<"Trip"> | boolean
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Trip"> | Date | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
@@ -384,6 +396,7 @@ export type TripCreateInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutTripsInput
@@ -403,6 +416,7 @@ export type TripUncheckedCreateInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -422,6 +436,7 @@ export type TripUpdateInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutTripsNestedInput
@@ -441,6 +456,7 @@ export type TripUncheckedUpdateInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -460,6 +476,7 @@ export type TripCreateManyInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -476,6 +493,7 @@ export type TripUpdateManyMutationInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -491,6 +509,7 @@ export type TripUncheckedUpdateManyInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -507,6 +526,7 @@ export type TripCountOrderByAggregateInput = {
   totalEstimatedCost?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -528,6 +548,7 @@ export type TripMaxOrderByAggregateInput = {
   totalEstimatedCost?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -544,6 +565,7 @@ export type TripMinOrderByAggregateInput = {
   totalEstimatedCost?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -700,6 +722,7 @@ export type TripCreateWithoutUserInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   places?: Prisma.PlaceCreateNestedManyWithoutTripInput
@@ -718,6 +741,7 @@ export type TripUncheckedCreateWithoutUserInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   places?: Prisma.PlaceUncheckedCreateNestedManyWithoutTripInput
@@ -764,6 +788,7 @@ export type TripScalarWhereInput = {
   totalEstimatedCost?: Prisma.FloatFilter<"Trip"> | number
   shareToken?: Prisma.StringNullableFilter<"Trip"> | string | null
   isPublic?: Prisma.BoolFilter<"Trip"> | boolean
+  notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   userId?: Prisma.StringNullableFilter<"Trip"> | string | null
@@ -780,6 +805,7 @@ export type TripCreateWithoutPlacesInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutTripsInput
@@ -798,6 +824,7 @@ export type TripUncheckedCreateWithoutPlacesInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -832,6 +859,7 @@ export type TripUpdateWithoutPlacesInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutTripsNestedInput
@@ -850,6 +878,7 @@ export type TripUncheckedUpdateWithoutPlacesInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -868,6 +897,7 @@ export type TripCreateWithoutRestaurantsInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutTripsInput
@@ -886,6 +916,7 @@ export type TripUncheckedCreateWithoutRestaurantsInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -920,6 +951,7 @@ export type TripUpdateWithoutRestaurantsInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutTripsNestedInput
@@ -938,6 +970,7 @@ export type TripUncheckedUpdateWithoutRestaurantsInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -956,6 +989,7 @@ export type TripCreateWithoutItineraryInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutTripsInput
@@ -974,6 +1008,7 @@ export type TripUncheckedCreateWithoutItineraryInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -1008,6 +1043,7 @@ export type TripUpdateWithoutItineraryInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutTripsNestedInput
@@ -1026,6 +1062,7 @@ export type TripUncheckedUpdateWithoutItineraryInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1044,6 +1081,7 @@ export type TripCreateManyUserInput = {
   totalEstimatedCost: number
   shareToken?: string | null
   isPublic?: boolean
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1059,6 +1097,7 @@ export type TripUpdateWithoutUserInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   places?: Prisma.PlaceUpdateManyWithoutTripNestedInput
@@ -1077,6 +1116,7 @@ export type TripUncheckedUpdateWithoutUserInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   places?: Prisma.PlaceUncheckedUpdateManyWithoutTripNestedInput
@@ -1095,6 +1135,7 @@ export type TripUncheckedUpdateManyWithoutUserInput = {
   totalEstimatedCost?: Prisma.FloatFieldUpdateOperationsInput | number
   shareToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1159,6 +1200,7 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   totalEstimatedCost?: boolean
   shareToken?: boolean
   isPublic?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -1180,6 +1222,7 @@ export type TripSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   totalEstimatedCost?: boolean
   shareToken?: boolean
   isPublic?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -1197,6 +1240,7 @@ export type TripSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   totalEstimatedCost?: boolean
   shareToken?: boolean
   isPublic?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -1214,12 +1258,13 @@ export type TripSelectScalar = {
   totalEstimatedCost?: boolean
   shareToken?: boolean
   isPublic?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type TripOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "destination" | "budgetTier" | "days" | "interests" | "travelDates" | "currency" | "totalEstimatedCost" | "shareToken" | "isPublic" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["trip"]>
+export type TripOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "destination" | "budgetTier" | "days" | "interests" | "travelDates" | "currency" | "totalEstimatedCost" | "shareToken" | "isPublic" | "notes" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["trip"]>
 export type TripInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Trip$userArgs<ExtArgs>
   places?: boolean | Prisma.Trip$placesArgs<ExtArgs>
@@ -1253,6 +1298,7 @@ export type $TripPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     totalEstimatedCost: number
     shareToken: string | null
     isPublic: boolean
+    notes: string | null
     createdAt: Date
     updatedAt: Date
     userId: string | null
@@ -1693,6 +1739,7 @@ export interface TripFieldRefs {
   readonly totalEstimatedCost: Prisma.FieldRef<"Trip", 'Float'>
   readonly shareToken: Prisma.FieldRef<"Trip", 'String'>
   readonly isPublic: Prisma.FieldRef<"Trip", 'Boolean'>
+  readonly notes: Prisma.FieldRef<"Trip", 'String'>
   readonly createdAt: Prisma.FieldRef<"Trip", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Trip", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Trip", 'String'>

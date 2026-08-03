@@ -54,6 +54,7 @@ export type RestaurantMinAggregateOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string | null
 }
 
@@ -71,6 +72,7 @@ export type RestaurantMaxAggregateOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string | null
 }
 
@@ -88,6 +90,7 @@ export type RestaurantCountAggregateOutputType = {
   photoRef: number
   openingHours: number
   address: number
+  notes: number
   tripId: number
   _all: number
 }
@@ -121,6 +124,7 @@ export type RestaurantMinAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
 }
 
@@ -138,6 +142,7 @@ export type RestaurantMaxAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
 }
 
@@ -155,6 +160,7 @@ export type RestaurantCountAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
   _all?: true
 }
@@ -259,6 +265,7 @@ export type RestaurantGroupByOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string
   _count: RestaurantCountAggregateOutputType | null
   _avg: RestaurantAvgAggregateOutputType | null
@@ -299,6 +306,7 @@ export type RestaurantWhereInput = {
   photoRef?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   address?: Prisma.StringNullableFilter<"Restaurant"> | string | null
+  notes?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   tripId?: Prisma.StringFilter<"Restaurant"> | string
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
 }
@@ -317,6 +325,7 @@ export type RestaurantOrderByWithRelationInput = {
   photoRef?: Prisma.SortOrderInput | Prisma.SortOrder
   openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tripId?: Prisma.SortOrder
   trip?: Prisma.TripOrderByWithRelationInput
 }
@@ -338,6 +347,7 @@ export type RestaurantWhereUniqueInput = Prisma.AtLeast<{
   photoRef?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   address?: Prisma.StringNullableFilter<"Restaurant"> | string | null
+  notes?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   tripId?: Prisma.StringFilter<"Restaurant"> | string
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
 }, "id">
@@ -356,6 +366,7 @@ export type RestaurantOrderByWithAggregationInput = {
   photoRef?: Prisma.SortOrderInput | Prisma.SortOrder
   openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tripId?: Prisma.SortOrder
   _count?: Prisma.RestaurantCountOrderByAggregateInput
   _avg?: Prisma.RestaurantAvgOrderByAggregateInput
@@ -381,6 +392,7 @@ export type RestaurantScalarWhereWithAggregatesInput = {
   photoRef?: Prisma.StringNullableWithAggregatesFilter<"Restaurant"> | string | null
   openingHours?: Prisma.StringNullableWithAggregatesFilter<"Restaurant"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Restaurant"> | string | null
   tripId?: Prisma.StringWithAggregatesFilter<"Restaurant"> | string
 }
 
@@ -398,6 +410,7 @@ export type RestaurantCreateInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   trip: Prisma.TripCreateNestedOneWithoutRestaurantsInput
 }
 
@@ -415,6 +428,7 @@ export type RestaurantUncheckedCreateInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   tripId: string
 }
 
@@ -432,6 +446,7 @@ export type RestaurantUpdateInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trip?: Prisma.TripUpdateOneRequiredWithoutRestaurantsNestedInput
 }
 
@@ -449,6 +464,7 @@ export type RestaurantUncheckedUpdateInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tripId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -466,6 +482,7 @@ export type RestaurantCreateManyInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   tripId: string
 }
 
@@ -483,6 +500,7 @@ export type RestaurantUpdateManyMutationInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RestaurantUncheckedUpdateManyInput = {
@@ -499,6 +517,7 @@ export type RestaurantUncheckedUpdateManyInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tripId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -526,6 +545,7 @@ export type RestaurantCountOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -550,6 +570,7 @@ export type RestaurantMaxOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -567,6 +588,7 @@ export type RestaurantMinOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -641,6 +663,7 @@ export type RestaurantCreateWithoutTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type RestaurantUncheckedCreateWithoutTripInput = {
@@ -657,6 +680,7 @@ export type RestaurantUncheckedCreateWithoutTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type RestaurantCreateOrConnectWithoutTripInput = {
@@ -701,6 +725,7 @@ export type RestaurantScalarWhereInput = {
   photoRef?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   address?: Prisma.StringNullableFilter<"Restaurant"> | string | null
+  notes?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   tripId?: Prisma.StringFilter<"Restaurant"> | string
 }
 
@@ -718,6 +743,7 @@ export type RestaurantCreateManyTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type RestaurantUpdateWithoutTripInput = {
@@ -734,6 +760,7 @@ export type RestaurantUpdateWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RestaurantUncheckedUpdateWithoutTripInput = {
@@ -750,6 +777,7 @@ export type RestaurantUncheckedUpdateWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type RestaurantUncheckedUpdateManyWithoutTripInput = {
@@ -766,6 +794,7 @@ export type RestaurantUncheckedUpdateManyWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -784,6 +813,7 @@ export type RestaurantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["restaurant"]>
@@ -802,6 +832,7 @@ export type RestaurantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["restaurant"]>
@@ -820,6 +851,7 @@ export type RestaurantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["restaurant"]>
@@ -838,10 +870,11 @@ export type RestaurantSelectScalar = {
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
 }
 
-export type RestaurantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "cuisine" | "description" | "priceRange" | "mealType" | "rating" | "reviewCount" | "lat" | "lng" | "photoRef" | "openingHours" | "address" | "tripId", ExtArgs["result"]["restaurant"]>
+export type RestaurantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "cuisine" | "description" | "priceRange" | "mealType" | "rating" | "reviewCount" | "lat" | "lng" | "photoRef" | "openingHours" | "address" | "notes" | "tripId", ExtArgs["result"]["restaurant"]>
 export type RestaurantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }
@@ -871,6 +904,7 @@ export type $RestaurantPayload<ExtArgs extends runtime.Types.Extensions.Internal
     photoRef: string | null
     openingHours: string | null
     address: string | null
+    notes: string | null
     tripId: string
   }, ExtArgs["result"]["restaurant"]>
   composites: {}
@@ -1309,6 +1343,7 @@ export interface RestaurantFieldRefs {
   readonly photoRef: Prisma.FieldRef<"Restaurant", 'String'>
   readonly openingHours: Prisma.FieldRef<"Restaurant", 'String'>
   readonly address: Prisma.FieldRef<"Restaurant", 'String'>
+  readonly notes: Prisma.FieldRef<"Restaurant", 'String'>
   readonly tripId: Prisma.FieldRef<"Restaurant", 'String'>
 }
     

@@ -84,6 +84,7 @@ export const TripScalarFieldEnum = {
   totalEstimatedCost: 'totalEstimatedCost',
   shareToken: 'shareToken',
   isPublic: 'isPublic',
+  notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
@@ -95,6 +96,7 @@ export type TripScalarFieldEnum = (typeof TripScalarFieldEnum)[keyof typeof Trip
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  password: 'password',
   name: 'name',
   image: 'image',
   createdAt: 'createdAt',
@@ -119,6 +121,7 @@ export const PlaceScalarFieldEnum = {
   photoRef: 'photoRef',
   openingHours: 'openingHours',
   address: 'address',
+  notes: 'notes',
   tripId: 'tripId'
 } as const
 
@@ -139,6 +142,7 @@ export const RestaurantScalarFieldEnum = {
   photoRef: 'photoRef',
   openingHours: 'openingHours',
   address: 'address',
+  notes: 'notes',
   tripId: 'tripId'
 } as const
 

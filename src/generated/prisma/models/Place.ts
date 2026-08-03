@@ -59,6 +59,7 @@ export type PlaceMinAggregateOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string | null
 }
 
@@ -77,6 +78,7 @@ export type PlaceMaxAggregateOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string | null
 }
 
@@ -95,6 +97,7 @@ export type PlaceCountAggregateOutputType = {
   photoRef: number
   openingHours: number
   address: number
+  notes: number
   tripId: number
   _all: number
 }
@@ -133,6 +136,7 @@ export type PlaceMinAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
 }
 
@@ -151,6 +155,7 @@ export type PlaceMaxAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
 }
 
@@ -169,6 +174,7 @@ export type PlaceCountAggregateInputType = {
   photoRef?: true
   openingHours?: true
   address?: true
+  notes?: true
   tripId?: true
   _all?: true
 }
@@ -274,6 +280,7 @@ export type PlaceGroupByOutputType = {
   photoRef: string | null
   openingHours: string | null
   address: string | null
+  notes: string | null
   tripId: string
   _count: PlaceCountAggregateOutputType | null
   _avg: PlaceAvgAggregateOutputType | null
@@ -315,6 +322,7 @@ export type PlaceWhereInput = {
   photoRef?: Prisma.StringNullableFilter<"Place"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Place"> | string | null
   address?: Prisma.StringNullableFilter<"Place"> | string | null
+  notes?: Prisma.StringNullableFilter<"Place"> | string | null
   tripId?: Prisma.StringFilter<"Place"> | string
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
 }
@@ -334,6 +342,7 @@ export type PlaceOrderByWithRelationInput = {
   photoRef?: Prisma.SortOrderInput | Prisma.SortOrder
   openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tripId?: Prisma.SortOrder
   trip?: Prisma.TripOrderByWithRelationInput
 }
@@ -356,6 +365,7 @@ export type PlaceWhereUniqueInput = Prisma.AtLeast<{
   photoRef?: Prisma.StringNullableFilter<"Place"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Place"> | string | null
   address?: Prisma.StringNullableFilter<"Place"> | string | null
+  notes?: Prisma.StringNullableFilter<"Place"> | string | null
   tripId?: Prisma.StringFilter<"Place"> | string
   trip?: Prisma.XOR<Prisma.TripScalarRelationFilter, Prisma.TripWhereInput>
 }, "id">
@@ -375,6 +385,7 @@ export type PlaceOrderByWithAggregationInput = {
   photoRef?: Prisma.SortOrderInput | Prisma.SortOrder
   openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tripId?: Prisma.SortOrder
   _count?: Prisma.PlaceCountOrderByAggregateInput
   _avg?: Prisma.PlaceAvgOrderByAggregateInput
@@ -401,6 +412,7 @@ export type PlaceScalarWhereWithAggregatesInput = {
   photoRef?: Prisma.StringNullableWithAggregatesFilter<"Place"> | string | null
   openingHours?: Prisma.StringNullableWithAggregatesFilter<"Place"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Place"> | string | null
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Place"> | string | null
   tripId?: Prisma.StringWithAggregatesFilter<"Place"> | string
 }
 
@@ -419,6 +431,7 @@ export type PlaceCreateInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   trip: Prisma.TripCreateNestedOneWithoutPlacesInput
 }
 
@@ -437,6 +450,7 @@ export type PlaceUncheckedCreateInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   tripId: string
 }
 
@@ -455,6 +469,7 @@ export type PlaceUpdateInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trip?: Prisma.TripUpdateOneRequiredWithoutPlacesNestedInput
 }
 
@@ -473,6 +488,7 @@ export type PlaceUncheckedUpdateInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tripId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -491,6 +507,7 @@ export type PlaceCreateManyInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
   tripId: string
 }
 
@@ -509,6 +526,7 @@ export type PlaceUpdateManyMutationInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlaceUncheckedUpdateManyInput = {
@@ -526,6 +544,7 @@ export type PlaceUncheckedUpdateManyInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tripId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -554,6 +573,7 @@ export type PlaceCountOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -581,6 +601,7 @@ export type PlaceMaxOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -599,6 +620,7 @@ export type PlaceMinOrderByAggregateInput = {
   photoRef?: Prisma.SortOrder
   openingHours?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   tripId?: Prisma.SortOrder
 }
 
@@ -684,6 +706,7 @@ export type PlaceCreateWithoutTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type PlaceUncheckedCreateWithoutTripInput = {
@@ -701,6 +724,7 @@ export type PlaceUncheckedCreateWithoutTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type PlaceCreateOrConnectWithoutTripInput = {
@@ -746,6 +770,7 @@ export type PlaceScalarWhereInput = {
   photoRef?: Prisma.StringNullableFilter<"Place"> | string | null
   openingHours?: Prisma.StringNullableFilter<"Place"> | string | null
   address?: Prisma.StringNullableFilter<"Place"> | string | null
+  notes?: Prisma.StringNullableFilter<"Place"> | string | null
   tripId?: Prisma.StringFilter<"Place"> | string
 }
 
@@ -764,6 +789,7 @@ export type PlaceCreateManyTripInput = {
   photoRef?: string | null
   openingHours?: string | null
   address?: string | null
+  notes?: string | null
 }
 
 export type PlaceUpdateWithoutTripInput = {
@@ -781,6 +807,7 @@ export type PlaceUpdateWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlaceUncheckedUpdateWithoutTripInput = {
@@ -798,6 +825,7 @@ export type PlaceUncheckedUpdateWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlaceUncheckedUpdateManyWithoutTripInput = {
@@ -815,6 +843,7 @@ export type PlaceUncheckedUpdateManyWithoutTripInput = {
   photoRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -834,6 +863,7 @@ export type PlaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["place"]>
@@ -853,6 +883,7 @@ export type PlaceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["place"]>
@@ -872,6 +903,7 @@ export type PlaceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["place"]>
@@ -891,10 +923,11 @@ export type PlaceSelectScalar = {
   photoRef?: boolean
   openingHours?: boolean
   address?: boolean
+  notes?: boolean
   tripId?: boolean
 }
 
-export type PlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "description" | "estimatedCost" | "estimatedDurationMinutes" | "tags" | "rating" | "reviewCount" | "lat" | "lng" | "photoRef" | "openingHours" | "address" | "tripId", ExtArgs["result"]["place"]>
+export type PlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "description" | "estimatedCost" | "estimatedDurationMinutes" | "tags" | "rating" | "reviewCount" | "lat" | "lng" | "photoRef" | "openingHours" | "address" | "notes" | "tripId", ExtArgs["result"]["place"]>
 export type PlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   trip?: boolean | Prisma.TripDefaultArgs<ExtArgs>
 }
@@ -925,6 +958,7 @@ export type $PlacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     photoRef: string | null
     openingHours: string | null
     address: string | null
+    notes: string | null
     tripId: string
   }, ExtArgs["result"]["place"]>
   composites: {}
@@ -1364,6 +1398,7 @@ export interface PlaceFieldRefs {
   readonly photoRef: Prisma.FieldRef<"Place", 'String'>
   readonly openingHours: Prisma.FieldRef<"Place", 'String'>
   readonly address: Prisma.FieldRef<"Place", 'String'>
+  readonly notes: Prisma.FieldRef<"Place", 'String'>
   readonly tripId: Prisma.FieldRef<"Place", 'String'>
 }
     

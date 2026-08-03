@@ -162,11 +162,19 @@ export default function TripPage() {
       const updatedTrip = { ...trip, notes: tempNotes };
       setTrip(updatedTrip);
 
-      // Also save to API if already saved
+      // Save to API if already saved
       if (!trip.id.startsWith('temp_')) {
-        const response = await fetch(`/api/trip/${trip.id}`);
-        // Note: In a real app, you'd have a PATCH endpoint
-        // For now, we just update locally and save on next explicit save
+        const response = await fetch('/api/trip/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...trip, notes: tempNotes }),
+        });
+
+        if (!response.ok) {
+          console.error('Failed to save notes to server');
+        }
       }
 
       setNotesDialogOpen(false);

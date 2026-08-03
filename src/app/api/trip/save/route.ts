@@ -17,10 +17,34 @@ export async function POST(request: NextRequest) {
 
     const tripData = body as AITripResponse;
     const userId = (body as any).userId; // Can be passed from client
+    const existingTripId = (body as any).id; // Existing trip ID for updates
 
     // Try to save to database
     try {
-      // Check if we have places/restaurants data
+      // Check if this is an update or a new trip
+      const isUpdate = existingTripId && !existingTripId.startsWith('temp_');
+      
+      if (isUpdate) {
+        // Update existing trip (notes only for now)
+        const trip = await prisma.trip.update({
+          where: { id: existingTripId },
+          data: {
+            notes: tripData.notes ?? null,
+            interests: tripData.interests?.join(',') ?? null,
+            travelDates: tripData.travelDates ?? null,
+            totalEstimatedCost: tripData.totalEstimatedCost,
+          },
+          include: {
+            places: true,
+            restaurants: true,
+            itinerary: true,
+          },
+        });
+
+        return NextResponse.json({ id: trip.id, saved: true, updated: true });
+      }
+
+      // Create new trip
       if (tripData.places && tripData.restaurants && tripData.itinerary) {
         const trip = await prisma.trip.create({
           data: {
