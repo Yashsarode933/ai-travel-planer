@@ -178,10 +178,13 @@
 - ✅ User activity tracking (API endpoints)
 
 ## 🎯 Sprint 4: Polish & Deploy (In Progress)
-- ⏳ Unit tests
-- ⏳ Performance optimization
-- ⏳ Production deployment
-- ⏳ Documentation
+- [x] Unit tests for authentication
+- [x] Unit tests for trip API
+- [x] Unit tests for favorites API
+- [x] Unit tests for activity API
+- [ ] Performance optimization
+- [ ] Production deployment
+- [ ] Documentation updates
 
 ## Configuration
 
