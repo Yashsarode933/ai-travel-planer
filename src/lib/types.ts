@@ -47,6 +47,7 @@ export interface AITripResponse {
   days?: number;
   interests?: string[];
   travelDates?: string;
+  notes?: string | null;
 }
 
 export interface EnrichedPlace extends AIPlace {
@@ -57,6 +58,7 @@ export interface EnrichedPlace extends AIPlace {
   photoRef?: string;
   openingHours?: string;
   address?: string;
+  notes?: string | null;
 }
 
 export interface EnrichedRestaurant extends AIRestaurant {
@@ -67,6 +69,7 @@ export interface EnrichedRestaurant extends AIRestaurant {
   photoRef?: string;
   openingHours?: string;
   address?: string;
+  notes?: string | null;
 }
 
 export interface TripSummary {
@@ -90,6 +93,7 @@ export interface TripWithDetails {
   travelDates: string | null;
   currency: string;
   totalEstimatedCost: number;
+  notes?: string | null;
   places: EnrichedPlace[];
   restaurants: EnrichedRestaurant[];
   itinerary: AIItineraryDay[];

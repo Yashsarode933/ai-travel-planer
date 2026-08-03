@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/stores/auth';
@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TripSummary } from '@/components/TripSummary';
 import { LoadingState } from '@/components/LoadingState';
-import { Plus, Heart, MapPin, Calendar, DollarSign, Utensils } from 'lucide-react';
+import { Plus, Heart, MapPin, Calendar, DollarSign, Utensils, Search, Filter, X } from 'lucide-react';
 import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface TripPreview {
   id: string;
@@ -27,11 +29,15 @@ interface TripDashboardProps {
   initialTrips?: TripPreview[];
 }
 
+type FilterType = 'all' | 'budget' | 'mid_range' | 'luxury';
+
 export function TripDashboard({ initialTrips = [] }: TripDashboardProps) {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
   const [trips, setTrips] = useState<TripPreview[]>(initialTrips);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [budgetFilter, setBudgetFilter] = useState<FilterType>('all');
 
   useEffect(() => {
     if (isLoading) return;
@@ -64,6 +70,27 @@ export function TripDashboard({ initialTrips = [] }: TripDashboardProps) {
   const handleNewTrip = () => {
     router.push('/');
   };
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setBudgetFilter('all');
+  };
+
+  // Filter trips based on search query and budget filter
+  const filteredTrips = useMemo(() => {
+    return trips.filter((trip) => {
+      const matchesSearch = searchQuery === '' || 
+        trip.destination.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (trip.places?.some(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()))) ||
+        (trip.restaurants?.some(r => r.name.toLowerCase().includes(searchQuery.toLowerCase())));
+      
+      const matchesBudget = budgetFilter === 'all' || trip.budgetTier === budgetFilter;
+      
+      return matchesSearch && matchesBudget;
+    });
+  }, [trips, searchQuery, budgetFilter]);
+
+  const hasActiveFilters = searchQuery !== '' || budgetFilter !== 'all';
 
   if (isLoading || loading) {
     return <LoadingState />;
@@ -99,41 +126,95 @@ export function TripDashboard({ initialTrips = [] }: TripDashboardProps) {
           </Button>
         </div>
 
+        {/* Search and Filter */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search trips by destination, place, or restaurant..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Select value={budgetFilter} onValueChange={(val) => setBudgetFilter(val as FilterType)}>
+              <SelectTrigger className="w-[150px]">
+                <Filter className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="Filter by budget" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Budgets</SelectItem>
+                <SelectItem value="budget">Budget</SelectItem>
+                <SelectItem value="mid_range">Mid-range</SelectItem>
+                <SelectItem value="luxury">Luxury</SelectItem>
+              </SelectContent>
+            </Select>
+            {hasActiveFilters && (
+              <Button variant="outline" onClick={handleClearFilters}>
+                Clear
+              </Button>
+            )}
+          </div>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-8">
-          <StatCard value={trips.length} label="Total Trips" icon={MapPin} />
-          <StatCard value={trips.reduce((sum, t) => sum + t.days, 0)} label="Total Days" icon={Calendar} />
+          <StatCard value={filteredTrips.length} label="Trips" icon={MapPin} />
+          <StatCard value={filteredTrips.reduce((sum, t) => sum + t.days, 0)} label="Total Days" icon={Calendar} />
           <StatCard 
-            value={trips.reduce((sum, t) => sum + (t.totalEstimatedCost || 0), 0)} 
+            value={filteredTrips.reduce((sum, t) => sum + (t.totalEstimatedCost || 0), 0)} 
             label="Total Budget" 
             prefix="$"
             icon={DollarSign} 
           />
-          <StatCard value={trips.filter(t => t.places?.length).length} label="With Places" icon={Heart} />
+          <StatCard value={filteredTrips.filter(t => t.places?.length).length} label="With Places" icon={Heart} />
         </div>
 
         {/* Trips Grid */}
-        {trips.length === 0 ? (
+        {filteredTrips.length === 0 ? (
           <Card className="border-border">
             <CardContent className="pt-8 text-center">
               <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No trips yet</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                {hasActiveFilters ? 'No matching trips' : 'No trips yet'}
+              </h3>
               <p className="text-muted-foreground mb-4">
-                Create your first trip to see it here
+                {hasActiveFilters 
+                  ? 'No trips match your search or filter criteria' 
+                  : 'Create your first trip to see it here'}
               </p>
-              <Button onClick={handleNewTrip}>
-                <Plus className="h-4 w-4 mr-2" />
-                Create First Trip
-              </Button>
+              {hasActiveFilters ? (
+                <Button variant="outline" onClick={handleClearFilters}>
+                  <X className="h-4 w-4 mr-2" />
+                  Clear Filters
+                </Button>
+              ) : (
+                <Button onClick={handleNewTrip}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create First Trip
+                </Button>
+              )}
             </CardContent>
           </Card>
         ) : (
           <>
             {/* Recently Viewed Trips */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">Recently Viewed</h2>
+              <h2 className="text-2xl font-bold mb-4">
+                {hasActiveFilters ? 'Filtered Results' : 'Recently Viewed'} ({filteredTrips.length} trip{filteredTrips.length !== 1 ? 's' : ''})
+              </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {trips.slice(0, 3).map((trip) => (
+                {filteredTrips.slice(0, 3).map((trip) => (
                   <Link key={trip.id} href={`/trip/${trip.id}`} className="block group">
                     <Card className="hover:shadow-xl transition-all duration-300 border-border bg-card">
                       <CardHeader className="p-0">
@@ -175,11 +256,11 @@ export function TripDashboard({ initialTrips = [] }: TripDashboardProps) {
             </div>
 
             {/* All Trips Grid */}
-            {trips.length > 3 && (
+            {filteredTrips.length > 3 && (
               <div>
-                <h2 className="text-2xl font-bold mb-4">All Trips ({trips.length})</h2>
+                <h2 className="text-2xl font-bold mb-4">All Trips ({filteredTrips.length})</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {trips.slice(3).map((trip) => (
+                  {filteredTrips.slice(3).map((trip) => (
                     <Link key={trip.id} href={`/trip/${trip.id}`} className="block group">
                       <Card className="hover:shadow-xl transition-all duration-300 border-border bg-card">
                         <CardHeader className="p-0">

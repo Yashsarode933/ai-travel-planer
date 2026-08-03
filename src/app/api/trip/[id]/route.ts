@@ -2,8 +2,57 @@ import { NextRequest, NextResponse } from 'next/server';
 import type { TripWithDetails } from '@/lib/types';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  try {
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Trip ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // Check if it's a temp ID - cannot delete
+    if (id.startsWith('temp_')) {
+      return NextResponse.json(
+        { error: 'Temporary trips cannot be deleted via API' },
+        { status: 400 }
+      );
+    }
+
+    // Check if trip exists
+    const existingTrip = await prisma.trip.findUnique({
+      where: { id },
+    });
+
+    if (!existingTrip) {
+      return NextResponse.json(
+        { error: 'Trip not found' },
+        { status: 404 }
+      );
+    }
+
+    // Delete trip (cascade deletes places, restaurants, and itinerary)
+    await prisma.trip.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ 
+      deleted: true, 
+      message: 'Trip deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting trip:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete trip' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   try {
     if (!id) {

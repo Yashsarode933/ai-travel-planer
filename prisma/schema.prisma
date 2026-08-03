@@ -22,6 +22,7 @@ model Trip {
   totalEstimatedCost Float
   shareToken    String? @unique
   isPublic      Boolean @default(false)
+  notes         String?  // User's personal notes for this trip
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   userId        String?
@@ -35,6 +36,7 @@ model Trip {
 model User {
   id            String   @id @default(cuid())
   email         String   @unique
+  password      String?  // Hashed password (optional for email-only login)
   name          String?
   image         String?
   createdAt     DateTime @default(now())
@@ -59,6 +61,7 @@ model Place {
   photoRef               String?
   openingHours           String?
   address                String?
+  notes                  String?  // User's personal notes for this place
   tripId                 String
   trip                   Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
 }
@@ -77,6 +80,7 @@ model Restaurant {
   photoRef    String?
   openingHours String?
   address     String?
+  notes       String?  // User's personal notes for this restaurant
   tripId      String
   trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
 }

@@ -53,12 +53,13 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Create user
+      // Create user with hashed password
       const hashedPassword = await hashPassword(password);
       const user = await prisma.user.create({
         data: {
           email,
           name: displayName || name,
+          password: hashedPassword,
         },
       });
 
@@ -114,8 +115,18 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Create token (assuming password is stored as hash or plain for this demo)
-      // In production, you'd verify the hashed password
+      // Verify password if user has a password set
+      if (user.password) {
+        const isValidPassword = await comparePassword(password, user.password);
+        if (!isValidPassword) {
+          return NextResponse.json(
+            { error: 'Invalid credentials' },
+            { status: 401 }
+          );
+        }
+      }
+
+      // Create token
       const token = signToken({ id: user.id, email: user.email });
 
       const response = NextResponse.json(

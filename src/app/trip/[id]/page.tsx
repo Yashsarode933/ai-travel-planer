@@ -22,9 +22,14 @@ import {
   Utensils,
   Calendar,
   ArrowLeft,
-  Save
+  Save,
+  Edit,
+  MessageCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 export default function TripPage() {
   const params = useParams();
@@ -32,31 +37,43 @@ export default function TripPage() {
   const [trip, setTrip] = useState<TripWithDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<string>('overview');
+  const [notesDialogOpen, setNotesDialogOpen] = useState(false);
+  const [tempNotes, setTempNotes] = useState('');
 
   const tripId = params.id as string;
 
   useEffect(() => {
     const loadTrip = async () => {
+      const load = async (tripData: TripWithDetails | null) => {
+        if (tripData) {
+          setTrip(tripData);
+          setTempNotes(tripData.notes || '');
+        }
+        setLoading(false);
+      };
+
       // Check if it's a temp trip (from localStorage)
       if (tripId.startsWith('temp_')) {
         const savedTrips = JSON.parse(localStorage.getItem('savedTrips') || '[]');
         const foundTrip = savedTrips.find((t: TripWithDetails) => t.id === tripId);
         
         if (foundTrip) {
-          setTrip(foundTrip);
+          await load(foundTrip);
         } else {
           // Try to fetch from API
           try {
             const response = await fetch(`/api/trip/${tripId}`);
             if (response.ok) {
               const data = await response.json();
-              setTrip(data);
+              await load(data);
+            } else {
+              await load(null);
             }
           } catch (error) {
             console.error('Error fetching trip:', error);
+            await load(null);
           }
         }
-        setLoading(false);
         return;
       }
 
@@ -65,19 +82,20 @@ export default function TripPage() {
         const response = await fetch(`/api/trip/${tripId}`);
         if (response.ok) {
           const data = await response.json();
-          setTrip(data);
+          await load(data);
         } else {
           // Try localStorage as fallback
           const savedTrips = JSON.parse(localStorage.getItem('savedTrips') || '[]');
           const foundTrip = savedTrips.find((t: TripWithDetails) => t.id === tripId);
           if (foundTrip) {
-            setTrip(foundTrip);
+            await load(foundTrip);
+          } else {
+            await load(null);
           }
         }
       } catch (error) {
         console.error('Error fetching trip:', error);
-      } finally {
-        setLoading(false);
+        await load(null);
       }
     };
 
@@ -110,9 +128,17 @@ export default function TripPage() {
     }
   };
 
-  const handleExport = () => {
-    // PDF export would be implemented with a library like jsPDF
-    alert('PDF export would be implemented here');
+  const handleExport = async () => {
+    if (!trip) return;
+
+    try {
+      // Import jsPDF dynamically to avoid SSR issues
+      const { exportTripToPDFFromHTML } = await import('@/lib/pdfExport');
+      exportTripToPDFFromHTML(trip);
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      alert('Error exporting PDF. Please try again.');
+    }
   };
 
   const handleShare = () => {
@@ -126,6 +152,26 @@ export default function TripPage() {
       // Fallback: copy URL to clipboard
       navigator.clipboard.writeText(window.location.href);
       alert('Link copied to clipboard!');
+    }
+  };
+
+  const handleUpdateNotes = async () => {
+    if (!trip) return;
+
+    try {
+      const updatedTrip = { ...trip, notes: tempNotes };
+      setTrip(updatedTrip);
+
+      // Also save to API if already saved
+      if (!trip.id.startsWith('temp_')) {
+        const response = await fetch(`/api/trip/${trip.id}`);
+        // Note: In a real app, you'd have a PATCH endpoint
+        // For now, we just update locally and save on next explicit save
+      }
+
+      setNotesDialogOpen(false);
+    } catch (error) {
+      console.error('Error updating notes:', error);
     }
   };
 
@@ -198,7 +244,55 @@ export default function TripPage() {
             <Download className="mr-2 h-4 w-4" />
             Export PDF
           </Button>
+          <Dialog open={notesDialogOpen} onOpenChange={setNotesDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="cursor-pointer">
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Add Notes
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add Trip Notes</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="trip-notes">Personal notes for this trip to {trip.destination}</Label>
+                  <Textarea
+                    id="trip-notes"
+                    placeholder="Add your personal notes, reminders, or things to remember..."
+                    value={tempNotes}
+                    onChange={(e) => setTempNotes(e.target.value)}
+                    className="mt-2"
+                    rows={5}
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setNotesDialogOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleUpdateNotes}>
+                    Save Notes
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
+
+        {trip.notes && (
+          <Card className="mb-6 border-border bg-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageCircle className="h-5 w-5" />
+                Your Notes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-foreground whitespace-pre-wrap">{trip.notes}</p>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">

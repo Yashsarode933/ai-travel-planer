@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
             travelDates: tripData.travelDates ?? null,
             currency: tripData.currency,
             totalEstimatedCost: tripData.totalEstimatedCost,
+            notes: tripData.notes ?? null,
             userId: userId || undefined,
             places: {
               create: tripData.places.map((place: any) => ({
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
                 photoRef: place.photoRef ?? null,
                 openingHours: place.openingHours ?? null,
                 address: place.address ?? null,
+                notes: place.notes ?? null,
               })),
             },
             restaurants: {
@@ -70,6 +72,7 @@ export async function POST(request: NextRequest) {
                   photoRef: restaurant.photoRef ?? null,
                   openingHours: restaurant.openingHours ?? null,
                   address: restaurant.address ?? null,
+                  notes: restaurant.notes ?? null,
                 };
               }),
             },
