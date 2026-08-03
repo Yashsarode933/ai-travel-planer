@@ -130,13 +130,13 @@
 - [x] Public trip viewing
 - [x] JWT cookie-based authentication
 
-### Sprint 3: Sharing & Favorites ✅ PARTIALLY COMPLETE
+### Sprint 3: Sharing & Favorites ✅ COMPLETED
 - [x] Generate shareable links with tokens (shareToken field added)
 - [x] Public trip viewing (read-only)
-- [ ] Favorites system for places/restaurants
-- [ ] User activity tracking
+- [x] Favorites system for places/restaurants
+- [x] User activity tracking
 
-### Sprint 4: Polish & Deploy
+### Sprint 4: Polish & Deploy ✅ IN PROGRESS
 - [ ] Unit tests for new features
 - [ ] Performance optimization
 - [ ] Deployment to production
@@ -150,8 +150,8 @@
 |--------|--------|-----------------|
 | Sprint 1: User Authentication | ✅ COMPLETED | Aug 3, 2026 |
 | Sprint 2: Enhanced Trip Storage | ✅ COMPLETED | Aug 3, 2026 |
-| Sprint 3: Sharing & Favorites | 🔄 IN PROGRESS | - |
-| Sprint 4: Polish & Deploy | ⏳ PENDING | - |
+| Sprint 3: Sharing & Favorites | ✅ COMPLETED | Aug 3, 2026 |
+| Sprint 4: Polish & Deploy | 🔄 IN PROGRESS | - |
 
 ## 🎯 Sprint 1: User Authentication (Completed)
 - ✅ Email/password signup and login
@@ -171,13 +171,13 @@
 - ✅ JWT cookie-based authentication
 - ✅ Saved trips persistence
 
-## 🎯 Sprint 3: Sharing & Favorites (In Progress)
+## 🎯 Sprint 3: Sharing & Favorites (Completed)
 - ✅ Trip sharing via shareable links
 - ✅ Public trip viewing
-- ⏳ Favorites bookmark system
-- ⏳ User activity tracking
+- ✅ Favorites bookmark system (API endpoints)
+- ✅ User activity tracking (API endpoints)
 
-## 🎯 Sprint 4: Polish & Deploy (Pending)
+## 🎯 Sprint 4: Polish & Deploy (In Progress)
 - ⏳ Unit tests
 - ⏳ Performance optimization
 - ⏳ Production deployment
