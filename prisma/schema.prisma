@@ -9,23 +9,24 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model Trip {
-  id          String    @id @default(cuid())
-  destination String
-  budgetTier  BudgetTier
-  days        Int
-  interests   String?
-  travelDates String?
-  currency    String
+  id            String   @id @default(cuid())
+  destination   String
+  budgetTier    BudgetTier
+  days          Int
+  interests     String?
+  travelDates   String?
+  currency      String
   totalEstimatedCost Float
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  places       Place[]
-  restaurants  Restaurant[]
-  itinerary    Itinerary[]
+  places        Place[]
+  restaurants   Restaurant[]
+  itinerary     Itinerary[]
 }
 
 model Place {
