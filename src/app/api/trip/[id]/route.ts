@@ -1,11 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { TripWithDetails } from '@/lib/types';
 import { prisma } from '@/lib/prisma';
+import { verifyToken } from '@/lib/auth';
+
+// Helper to verify authentication
+async function getAuthenticatedUser(request: NextRequest) {
+  const authorization = request.headers.get('authorization');
+  let token: string | null = null;
+  
+  if (authorization && authorization.startsWith('Bearer ')) {
+    token = authorization.split(' ')[1];
+  } else {
+    token = request.cookies.get('token')?.value || null;
+  }
+  
+  if (!token) {
+    return null;
+  }
+  
+  const payload = verifyToken(token);
+  if (!payload) {
+    return null;
+  }
+  
+  const user = await prisma.user.findUnique({
+    where: { id: payload.id },
+  });
+  
+  return user;
+}
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   try {
+    // Verify authentication
+    const user = await getAuthenticatedUser(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     if (!id) {
       return NextResponse.json(
         { error: 'Trip ID is required' },
@@ -21,7 +58,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       );
     }
 
-    // Check if trip exists
+    // Check if trip exists and belongs to user
     const existingTrip = await prisma.trip.findUnique({
       where: { id },
     });
@@ -30,6 +67,14 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       return NextResponse.json(
         { error: 'Trip not found' },
         { status: 404 }
+      );
+    }
+
+    // Verify ownership
+    if (existingTrip.userId !== user.id) {
+      return NextResponse.json(
+        { error: 'You do not have permission to delete this trip' },
+        { status: 403 }
       );
     }
 
@@ -124,6 +169,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
       const itinerary = Array.from(dayMap.values()).sort((a: any, b: any) => a.day - b.day);
 
+      // Check if trip is public or user is authenticated owner
+      const isAuthenticated = await getAuthenticatedUser(request);
+      const isOwner = isAuthenticated && trip.userId === isAuthenticated.id;
+      const canAccess = trip.isPublic || isOwner;
+
+      if (!canAccess) {
+        return NextResponse.json(
+          { error: 'Access denied. This trip is private.' },
+          { status: 403 }
+        );
+      }
+
       return NextResponse.json({
         id: trip.id,
         destination: trip.destination,
@@ -133,6 +190,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         travelDates: trip.travelDates,
         currency: trip.currency,
         totalEstimatedCost: Number(trip.totalEstimatedCost),
+        notes: trip.notes,
         places: trip.places.map((p: any) => ({
           id: p.id,
           name: p.name,
@@ -148,6 +206,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           photoRef: p.photoRef,
           openingHours: p.openingHours,
           address: p.address,
+          notes: p.notes,
         })),
         restaurants: trip.restaurants.map((r: any) => {
           const priceRangeMap: Record<string, string> = {
@@ -170,6 +229,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             photoRef: r.photoRef,
             openingHours: r.openingHours,
             address: r.address,
+            notes: r.notes,
           };
         }),
         itinerary,
