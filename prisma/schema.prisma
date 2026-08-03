@@ -40,6 +40,8 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   trips         Trip[]
+  favorites     Favorite[]
+  activities    UserActivity[]
 }
 
 model Place {
@@ -93,6 +95,42 @@ model Itinerary {
   eveningNotes    String?
   tripId          String
   trip            Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id          String   @id @default(cuid())
+  type        FavoriteType
+  itemId      String   // Place or Restaurant ID
+  addedAt     DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, itemId])
+}
+
+model UserActivity {
+  id          String   @id @default(cuid())
+  type        ActivityType
+  itemId      String?  // Optional - for specific item references
+  itemType    String?  // "trip", "place", "restaurant"
+  metadata    String?  // JSON string with additional data
+  createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum FavoriteType {
+  PLACE
+  RESTAURANT
+  TRIP
+}
+
+enum ActivityType {
+  VIEW
+  SAVE
+  SHARE
+  LIKE
+  DISLIKE
 }
 
 enum BudgetTier {

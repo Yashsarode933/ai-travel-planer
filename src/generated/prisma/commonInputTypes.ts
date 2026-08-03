@@ -278,6 +278,40 @@ export type EnumMealTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumMealTypeFilter<$PrismaModel>
 }
 
+export type EnumFavoriteTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FavoriteType | Prisma.EnumFavoriteTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FavoriteType[]
+  notIn?: $Enums.FavoriteType[]
+  not?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel> | $Enums.FavoriteType
+}
+
+export type EnumFavoriteTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FavoriteType | Prisma.EnumFavoriteTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FavoriteType[]
+  notIn?: $Enums.FavoriteType[]
+  not?: Prisma.NestedEnumFavoriteTypeWithAggregatesFilter<$PrismaModel> | $Enums.FavoriteType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel>
+}
+
+export type EnumActivityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[]
+  notIn?: $Enums.ActivityType[]
+  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
+}
+
+export type EnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[]
+  notIn?: $Enums.ActivityType[]
+  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[]
@@ -535,6 +569,40 @@ export type NestedEnumMealTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMealTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMealTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumFavoriteTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FavoriteType | Prisma.EnumFavoriteTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FavoriteType[]
+  notIn?: $Enums.FavoriteType[]
+  not?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel> | $Enums.FavoriteType
+}
+
+export type NestedEnumFavoriteTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FavoriteType | Prisma.EnumFavoriteTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FavoriteType[]
+  notIn?: $Enums.FavoriteType[]
+  not?: Prisma.NestedEnumFavoriteTypeWithAggregatesFilter<$PrismaModel> | $Enums.FavoriteType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFavoriteTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumActivityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[]
+  notIn?: $Enums.ActivityType[]
+  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
+}
+
+export type NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[]
+  notIn?: $Enums.ActivityType[]
+  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
 }
 
 

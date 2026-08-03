@@ -9,6 +9,26 @@
 * 🟢 You can import this file directly.
 */
 
+export const FavoriteType = {
+  PLACE: 'PLACE',
+  RESTAURANT: 'RESTAURANT',
+  TRIP: 'TRIP'
+} as const
+
+export type FavoriteType = (typeof FavoriteType)[keyof typeof FavoriteType]
+
+
+export const ActivityType = {
+  VIEW: 'VIEW',
+  SAVE: 'SAVE',
+  SHARE: 'SHARE',
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+} as const
+
+export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
+
+
 export const BudgetTier = {
   budget: 'budget',
   mid_range: 'mid_range',

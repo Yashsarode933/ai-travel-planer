@@ -42,3 +42,13 @@ export type Restaurant = Prisma.RestaurantModel
  * 
  */
 export type Itinerary = Prisma.ItineraryModel
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = Prisma.FavoriteModel
+/**
+ * Model UserActivity
+ * 
+ */
+export type UserActivity = Prisma.UserActivityModel

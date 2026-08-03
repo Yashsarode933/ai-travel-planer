@@ -55,7 +55,9 @@ export const ModelName = {
   User: 'User',
   Place: 'Place',
   Restaurant: 'Restaurant',
-  Itinerary: 'Itinerary'
+  Itinerary: 'Itinerary',
+  Favorite: 'Favorite',
+  UserActivity: 'UserActivity'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -159,6 +161,30 @@ export const ItineraryScalarFieldEnum = {
 } as const
 
 export type ItineraryScalarFieldEnum = (typeof ItineraryScalarFieldEnum)[keyof typeof ItineraryScalarFieldEnum]
+
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  itemId: 'itemId',
+  addedAt: 'addedAt',
+  userId: 'userId'
+} as const
+
+export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
+
+
+export const UserActivityScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  itemId: 'itemId',
+  itemType: 'itemType',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type UserActivityScalarFieldEnum = (typeof UserActivityScalarFieldEnum)[keyof typeof UserActivityScalarFieldEnum]
 
 
 export const SortOrder = {
