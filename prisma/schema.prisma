@@ -21,12 +21,26 @@ model Trip {
   travelDates   String?
   currency      String
   totalEstimatedCost Float
+  shareToken    String? @unique
+  isPublic      Boolean @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   places        Place[]
   restaurants   Restaurant[]
   itinerary     Itinerary[]
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  trips         Trip[]
 }
 
 model Place {
