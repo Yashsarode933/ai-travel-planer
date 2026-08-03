@@ -4,13 +4,15 @@ A full-stack web app that lets users input a destination, budget, and trip prefe
 
 ## Features
 
+- **User Authentication**: Email/password sign up/login with JWT session management
 - **Destination Search**: Autocomplete powered by Google Places API
 - **Budget Selection**: Choose from Budget, Mid-range, or Luxury tiers
 - **AI-Generated Itineraries**: OpenAI GPT-4o or compatible models generate realistic travel plans
 - **Places Enrichment**: Google Places API enriches AI output with real photos, ratings, and coordinates
 - **Interactive Map**: Visualizes all trip locations on a Google Map
 - **Trip Summary**: Displays destination, dates, budget, and estimated costs
-- **Save & Export**: Save trips to database (optional) or browser storage
+- **Save & Share**: Save trips to database (optional) or browser storage, share with friends via link
+- **Export**: Export itineraries as PDF
 
 ## Tech Stack
 
@@ -68,12 +70,25 @@ npx prisma generate
 npx prisma migrate dev --name init
 ```
 
-5. Run the development server:
+5. (Optional) Set up authentication:
+Create a `.env.local` file with these additional variables:
+
+```bash
+# Authentication
+JWT_SECRET="your-jwt-secret-key"  # Generate with: openssl rand -base64 32
+
+# Google OAuth (optional - for future implementation)
+NEXTAUTH_SECRET="your-nextauth-secret"
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
+
+6. Run the development server:
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### API Keys Setup
 
@@ -130,12 +145,16 @@ OPENAI_MODEL="gpt-3.5-turbo"
 src/
 ├── app/
 │   ├── page.tsx              # Landing page with trip form
+│   ├── dashboard/page.tsx    # User trips dashboard
+│   ├── shared/[token]/page.tsx # Public shared trip view
 │   ├── trip/[id]/page.tsx    # Trip results page
 │   ├── api/
 │   │   ├── generate-trip/route.ts
 │   │   ├── enrich-places/route.ts
+│   │   ├── auth/route.ts     # User authentication (signup, login, verify)
 │   │   └── trip/
 │   │       ├── save/route.ts
+│   │       ├── share/route.ts # Share trip links
 │   │       └── [id]/route.ts
 │   └── layout.tsx
 ├── components/
@@ -148,7 +167,8 @@ src/
 │   ├── ItineraryDay.tsx      # Day-by-day itinerary display
 │   ├── LoadingState.tsx      # Loading animations and progress
 │   ├── ExpenseSummary.tsx    # Cost breakdown summary
-│   ├── DestinationAutocomplete.tsx # Google Places autocomplete
+│   ├── TripSummary.tsx       # Trip summary card
+│   ├── UserProfile.tsx       # User profile display
 │   ├── theme-provider.tsx    # Theme provider for dark/light mode
 │   └── ui/                   # shadcn/ui component library
 ├── lib/
@@ -156,7 +176,11 @@ src/
 │   ├── googlePlaces.ts       # Google Maps API helpers
 │   ├── schema.ts             # Zod validation schemas
 │   ├── types.ts              # TypeScript types
+│   ├── auth.ts               # Authentication utilities
+│   ├── prisma.ts             # Prisma client singleton
 │   └── utils.ts              # Utility functions
+├── stores/
+│   └── auth.ts               # Zustand auth state store
 └── generated/
     └── prisma/               # Prisma client (generated)
 ```
@@ -179,8 +203,11 @@ The application features a modern, professional UI with:
 |----------|--------|-------------|
 | `/api/generate-trip` | POST | Generate a trip plan |
 | `/api/enrich-places` | POST | Enrich places with Google Maps data |
+| `/api/auth` | POST | User signup/login |
+| `/api/auth/verify` | PUT | Verify JWT token |
 | `/api/trip/save` | POST | Save a trip to database |
 | `/api/trip/[id]` | GET | Fetch a saved trip |
+| `/api/trip/share` | POST | Generate shareable link for a trip |
 
 ## Database Schema
 
