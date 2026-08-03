@@ -26,10 +26,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       shareToken,
       shareUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/shared/${shareToken}`,
     });
+
+    // Add caching headers
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    
+    return response;
   } catch (error) {
     console.error('Error sharing trip:', error);
     return NextResponse.json(

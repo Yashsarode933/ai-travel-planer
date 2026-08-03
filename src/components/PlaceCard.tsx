@@ -2,15 +2,26 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { EnrichedPlace } from '@/lib/types';
-import { Star, MapPin, Clock, DollarSign } from 'lucide-react';
+import { Star, MapPin, Clock, DollarSign, Heart } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface PlaceCardProps {
   place: EnrichedPlace;
+  isFavorite?: boolean;
+  onFavoriteToggle?: (isFavorite: boolean) => void;
 }
 
-export function PlaceCard({ place }: PlaceCardProps) {
+export function PlaceCard({ place, isFavorite = false, onFavoriteToggle }: PlaceCardProps) {
+  const [favState, setFavState] = useState(isFavorite);
+  
+  const toggleFavorite = () => {
+    setFavState(!favState);
+    onFavoriteToggle?.(!favState);
+  };
+
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-border bg-card overflow-hidden">
       <div className="relative aspect-[4/3]">
@@ -30,6 +41,16 @@ export function PlaceCard({ place }: PlaceCardProps) {
             <MapPin className="h-8 w-8 text-muted-foreground" />
           </div>
         )}
+        
+        {/* Favorite button */}
+        <Button
+          onClick={toggleFavorite}
+          size="icon"
+          className="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-900 shadow-sm"
+          aria-label={favState ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart className={`h-4 w-4 ${favState ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+        </Button>
         
         {place.rating > 0 && (
           <div className="absolute top-3 right-3">

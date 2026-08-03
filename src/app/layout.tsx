@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,13 @@ export default function RootLayout({
     >
       <head />
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        {children}
+        <Suspense fallback={
+          <div className="flex-1 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          </div>
+        }>
+          {children}
+        </Suspense>
         <Toaster />
       </body>
     </html>

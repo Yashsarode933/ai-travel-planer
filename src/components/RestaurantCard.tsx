@@ -2,12 +2,16 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { EnrichedRestaurant } from '@/lib/types';
-import { Star, MapPin, Clock, DollarSign } from 'lucide-react';
+import { Star, MapPin, Clock, DollarSign, Heart } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface RestaurantCardProps {
   restaurant: EnrichedRestaurant;
+  isFavorite?: boolean;
+  onFavoriteToggle?: (isFavorite: boolean) => void;
 }
 
 const priceRangeLabels: Record<string, string> = {
@@ -23,7 +27,14 @@ const mealTypeLabels: Record<string, string> = {
   dinner: 'Dinner',
 };
 
-export function RestaurantCard({ restaurant }: RestaurantCardProps) {
+export function RestaurantCard({ restaurant, isFavorite = false, onFavoriteToggle }: RestaurantCardProps) {
+  const [favState, setFavState] = useState(isFavorite);
+  
+  const toggleFavorite = () => {
+    setFavState(!favState);
+    onFavoriteToggle?.(!favState);
+  };
+
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-border bg-card overflow-hidden">
       <div className="relative aspect-[4/3]">
@@ -43,6 +54,16 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             <MapPin className="h-8 w-8 text-muted-foreground" />
           </div>
         )}
+        
+        {/* Favorite button */}
+        <Button
+          onClick={toggleFavorite}
+          size="icon"
+          className="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-900 shadow-sm"
+          aria-label={favState ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart className={`h-4 w-4 ${favState ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+        </Button>
         
         {restaurant.rating > 0 && (
           <div className="absolute top-3 right-3">

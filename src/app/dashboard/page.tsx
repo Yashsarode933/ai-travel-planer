@@ -128,57 +128,99 @@ export function TripDashboard({ initialTrips = [] }: TripDashboardProps) {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trips.map((trip) => (
-              <Link key={trip.id} href={`/trip/${trip.id}`} className="block group">
-                <Card className="hover:shadow-xl transition-all duration-300 border-border bg-card">
-                  <CardHeader className="p-0">
-                    <div className="relative aspect-[16/9]">
-                      {trip.places?.[0]?.name ? (
-                        <Image
-                          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${trip.places[0].photoRef}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_API_KEY}`}
-                          alt={trip.destination}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover group-hover:scale-105 transition-transform"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/placeholder.png';
-                          }}
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 to-emerald-50">
-                          <MapPin className="h-8 w-8 text-blue-500" />
+          <>
+            {/* Recently Viewed Trips */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-4">Recently Viewed</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {trips.slice(0, 3).map((trip) => (
+                  <Link key={trip.id} href={`/trip/${trip.id}`} className="block group">
+                    <Card className="hover:shadow-xl transition-all duration-300 border-border bg-card">
+                      <CardHeader className="p-0">
+                        <div className="relative aspect-[16/9]">
+                          {trip.places?.[0]?.name ? (
+                            <Image
+                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${trip.places[0].photoRef}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_API_KEY}`}
+                              alt={trip.destination}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 400px"
+                              className="object-cover group-hover:scale-105 transition-transform"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = '/placeholder.png';
+                              }}
+                            />
+                          ) : (
+                            <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 to-emerald-50">
+                              <MapPin className="h-8 w-8 text-blue-500" />
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-4">
-                    <CardTitle className="text-lg leading-tight mb-2">
-                      {trip.destination}
-                    </CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                      <span className="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
-                        {trip.budgetTier}
-                      </span>
-                      <span>*</span>
-                      <span>{trip.days} days</span>
-                    </div>
-                    {trip.places && trip.places.length > 0 && (
-                      <div className="space-y-1 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <Utensils className="h-4 w-4" />
-                          <span>{trip.restaurants?.length || 0} restaurants</span>
+                      </CardHeader>
+                      <CardContent className="pt-4">
+                        <CardTitle className="text-lg leading-tight mb-2">
+                          {trip.destination}
+                        </CardTitle>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                          <span className="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                            {trip.budgetTier}
+                          </span>
+                          <span>*</span>
+                          <span>{trip.days} days</span>
                         </div>
-                        <div className="text-xs">
-                          Est. budget: {trip.currency} {Math.round(trip.totalEstimatedCost).toLocaleString()}
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* All Trips Grid */}
+            {trips.length > 3 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">All Trips ({trips.length})</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {trips.slice(3).map((trip) => (
+                    <Link key={trip.id} href={`/trip/${trip.id}`} className="block group">
+                      <Card className="hover:shadow-xl transition-all duration-300 border-border bg-card">
+                        <CardHeader className="p-0">
+                          <div className="relative aspect-[16/9]">
+                            {trip.places?.[0]?.name ? (
+                              <Image
+                                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${trip.places[0].photoRef}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_API_KEY}`}
+                                alt={trip.destination}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 400px"
+                                className="object-cover group-hover:scale-105 transition-transform"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = '/placeholder.png';
+                                }}
+                              />
+                            ) : (
+                              <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 to-emerald-50">
+                                <MapPin className="h-8 w-8 text-blue-500" />
+                              </div>
+                            )}
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-4">
+                          <CardTitle className="text-lg leading-tight mb-2">
+                            {trip.destination}
+                          </CardTitle>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                            <span className="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                              {trip.budgetTier}
+                            </span>
+                            <span>*</span>
+                            <span>{trip.days} days</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
