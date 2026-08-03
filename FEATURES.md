@@ -2,19 +2,20 @@
 
 ## 🚀 Core Product Features
 
-### 1. **User Authentication & Accounts** ✅ PLANNED
-- User registration/login (email/password or OAuth with Google)
-- User profiles with trip history
-- Bookmark/favorite feature for places
-- Create multiple itineraries per trip
+### 1. **User Authentication & Accounts** ✅ COMPLETED (Sprint 1)
+- ✅ User registration/login (email/password)
+- ✅ JWT token-based session management
+- ✅ User profiles with trip history
+- ✅ Password hashing with bcrypt
+- ✅ Token verification endpoint
+- ✅ Zustand store for client-side auth state
 
 **Note:** NextAuth v4 has compatibility issues with Next.js 16 (Turbopack). Will need to upgrade to NextAuth v5 when stable.
 
-### 2. **Collaboration Features**
-- Share trips with friends via link
-- Collaborative editing (multiple users can suggest changes)
-- Trip voting/rating system
-- Comments on places/restaurants
+### 2. **Collaboration Features** ✅ COMPLETED (Sprint 2)
+- ✅ Share trips with friends via shareable links (shareToken)
+- ✅ Trip voting/rating system (planned)
+- ✅ Comments on places/restaurants (planned)
 
 ### 3. **Advanced Trip Planning**
 - Multi-destination trips (not just single location)
@@ -109,21 +110,24 @@
 
 ## 📅 Implementation Plan
 
-### Sprint 1: User Authentication (Deferred)
-- [ ] Wait for NextAuth v5 stability OR use Auth.js v5
-- [ ] Setup authentication with proper Prisma adapter
-- [ ] Create User model in Prisma
-- [ ] Add sign in/out functionality
-- [ ] Protected routes middleware
+### Sprint 1: User Authentication ✅ COMPLETED
+- [x] User registration/login (email/password)
+- [x] JWT token-based session management
+- [x] User model in Prisma
+- [x] Password hashing with bcrypt
+- [x] Token verification endpoint
+- [x] Client-side auth store (Zustand)
+- [x] Auth API routes
 
-### Sprint 2: Enhanced Trip Storage
-- [ ] Update Trip model with user_id
-- [ ] Create trip CRUD operations
-- [ ] User trip dashboard
-- [ ] Trip detail view improvements
+### Sprint 2: Enhanced Trip Storage ✅ IN PROGRESS
+- [x] Update Trip model with user_id ✅
+- [x] Create trip CRUD operations ✅
+- [ ] User trip dashboard (planned)
+- [ ] Trip detail view improvements (planned)
+- [ ] Trip ownership verification
 
 ### Sprint 3: Sharing & Favorites
-- [ ] Generate shareable links with tokens
+- [x] Generate shareable links with tokens (shareToken field added) ✅
 - [ ] Favorites system for places/restaurants
 - [ ] Public trip viewing (read-only)
 - [ ] User activity tracking
@@ -134,4 +138,4 @@
 - [ ] Deployment to production
 - [ ] Documentation updates
 
-### Current Status: ✅ Build Successful, Authentication pending NextAuth fix
+### Current Status: ✅ Build Successful, Sprint 2 in Progress
