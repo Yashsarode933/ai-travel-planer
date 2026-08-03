@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { AITripResponse } from '@/lib/types';
+import { prisma } from '@/lib/prisma';
+import { verifyToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,25 +16,22 @@ export async function POST(request: NextRequest) {
     }
 
     const tripData = body as AITripResponse;
+    const userId = (body as any).userId; // Can be passed from client
 
     // Try to save to database
     try {
-      // Use relative import to avoid Turbopack alias issues
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { PrismaClient } = require('@prisma/client');
-      const prisma = new PrismaClient();
-
       // Check if we have places/restaurants data
       if (tripData.places && tripData.restaurants && tripData.itinerary) {
         const trip = await prisma.trip.create({
           data: {
             destination: tripData.destination,
             budgetTier: tripData.budgetTier.replace('-', '_') as 'budget' | 'mid_range' | 'luxury',
-            days: tripData.days,
+            days: tripData.days || 0,
             interests: tripData.interests?.join(',') ?? null,
             travelDates: tripData.travelDates ?? null,
             currency: tripData.currency,
             totalEstimatedCost: tripData.totalEstimatedCost,
+            userId: userId || undefined,
             places: {
               create: tripData.places.map((place: any) => ({
                 name: place.name,
@@ -52,7 +51,7 @@ export async function POST(request: NextRequest) {
             },
             restaurants: {
               create: tripData.restaurants.map((restaurant: any) => {
-                const priceRangeMap: Record<string, string> = {
+                const priceRangeMap: Record<string, 'ONE' | 'TWO' | 'THREE' | 'FOUR'> = {
                   '$': 'ONE',
                   '$$': 'TWO',
                   '$$$': 'THREE',

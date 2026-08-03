@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { TripWithDetails } from '@/lib/types';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
@@ -26,11 +27,6 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
 
     // Try database first
     try {
-      // Use relative import to avoid Turbopack alias issues
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { PrismaClient } = require('@prisma/client');
-      const prisma = new PrismaClient();
-
       const trip = await prisma.trip.findUnique({
         where: { id },
         include: {

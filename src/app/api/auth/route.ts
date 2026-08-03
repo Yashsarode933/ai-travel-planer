@@ -152,3 +152,58 @@ export async function GET(request: NextRequest) {
     { status: 405 }
   );
 }
+
+export async function PUT(request: NextRequest) {
+  // Verify token endpoint
+  const corsResponse = handleCORS(request);
+  if (corsResponse) return corsResponse;
+
+  try {
+    const authorization = request.headers.get('authorization');
+    
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+      return NextResponse.json(
+        { error: 'Authorization header required' },
+        { status: 401 }
+      );
+    }
+
+    const token = authorization.split(' ')[1];
+    const { verifyToken } = await import('@/lib/auth');
+    const payload = verifyToken(token);
+
+    if (!payload) {
+      return NextResponse.json(
+        { error: 'Invalid or expired token' },
+        { status: 401 }
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.id },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        image: user.image,
+      },
+      token,
+    });
+  } catch (error) {
+    console.error('Verify token error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
