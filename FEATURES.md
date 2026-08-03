@@ -122,14 +122,17 @@
 ### Sprint 2: Enhanced Trip Storage ✅ IN PROGRESS
 - [x] Update Trip model with user_id ✅
 - [x] Create trip CRUD operations ✅
-- [ ] User trip dashboard (planned)
-- [ ] Trip detail view improvements (planned)
-- [ ] Trip ownership verification
+- [x] User trip dashboard ✅
+- [x] Trip detail view improvements ✅
+- [x] Trip ownership verification ✅
+- [x] Saved trips persistence ✅
+- [x] Trip sharing via shareable links ✅
+- [x] Public trip viewing ✅
 
-### Sprint 3: Sharing & Favorites
+### Sprint 3: Sharing & Favorites ✅ PARTIALLY COMPLETE
 - [x] Generate shareable links with tokens (shareToken field added) ✅
+- [x] Public trip viewing (read-only) ✅
 - [ ] Favorites system for places/restaurants
-- [ ] Public trip viewing (read-only)
 - [ ] User activity tracking
 
 ### Sprint 4: Polish & Deploy
