@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       // Create token
       const token = signToken({ id: user.id, email: user.email });
 
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           user: {
             id: user.id,
@@ -78,11 +78,20 @@ export async function POST(request: NextRequest) {
         {
           status: 201,
           headers: {
-            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
           },
         }
       );
+
+      // Set JWT as httpOnly cookie for security
+      response.cookies.set('token', token, {
+        httpOnly: true,
+        path: '/',
+        maxAge: 604800, // 7 days
+        sameSite: 'lax',
+      });
+
+      return response;
     }
 
     if (action === 'login') {
@@ -109,7 +118,7 @@ export async function POST(request: NextRequest) {
       // In production, you'd verify the hashed password
       const token = signToken({ id: user.id, email: user.email });
 
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           user: {
             id: user.id,
@@ -122,11 +131,20 @@ export async function POST(request: NextRequest) {
         {
           status: 200,
           headers: {
-            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
           },
         }
       );
+
+      // Set JWT as httpOnly cookie for security
+      response.cookies.set('token', token, {
+        httpOnly: true,
+        path: '/',
+        maxAge: 604800, // 7 days
+        sameSite: 'lax',
+      });
+
+      return response;
     }
 
     return NextResponse.json(
@@ -159,16 +177,24 @@ export async function PUT(request: NextRequest) {
   if (corsResponse) return corsResponse;
 
   try {
+    // Try to get token from Authorization header first
     const authorization = request.headers.get('authorization');
+    let token: string | null = null;
     
-    if (!authorization || !authorization.startsWith('Bearer ')) {
+    if (authorization && authorization.startsWith('Bearer ')) {
+      token = authorization.split(' ')[1];
+    } else {
+      // Fallback to cookie
+      token = request.cookies.get('token')?.value || null;
+    }
+    
+    if (!token) {
       return NextResponse.json(
-        { error: 'Authorization header required' },
+        { error: 'Token required' },
         { status: 401 }
       );
     }
 
-    const token = authorization.split(' ')[1];
     const { verifyToken } = await import('@/lib/auth');
     const payload = verifyToken(token);
 
@@ -206,4 +232,25 @@ export async function PUT(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function DELETE(request: NextRequest) {
+  // Logout endpoint - clear the token cookie
+  const corsResponse = handleCORS(request);
+  if (corsResponse) return corsResponse;
+
+  const response = NextResponse.json(
+    { message: 'Logged out successfully' },
+    { status: 200 }
+  );
+
+  // Clear the token cookie by setting it to empty with maxAge 0
+  response.cookies.set('token', '', {
+    httpOnly: true,
+    path: '/',
+    maxAge: 0,
+    sameSite: 'lax',
+  });
+
+  return response;
 }

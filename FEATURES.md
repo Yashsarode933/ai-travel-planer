@@ -119,19 +119,20 @@
 - [x] Client-side auth store (Zustand)
 - [x] Auth API routes
 
-### Sprint 2: Enhanced Trip Storage ✅ IN PROGRESS
-- [x] Update Trip model with user_id ✅
-- [x] Create trip CRUD operations ✅
-- [x] User trip dashboard ✅
-- [x] Trip detail view improvements ✅
-- [x] Trip ownership verification ✅
-- [x] Saved trips persistence ✅
-- [x] Trip sharing via shareable links ✅
-- [x] Public trip viewing ✅
+### Sprint 2: Enhanced Trip Storage ✅ COMPLETED
+- [x] Update Trip model with user_id
+- [x] Create trip CRUD operations
+- [x] User trip dashboard
+- [x] Trip detail view improvements
+- [x] Trip ownership verification
+- [x] Saved trips persistence
+- [x] Trip sharing via shareable links
+- [x] Public trip viewing
+- [x] JWT cookie-based authentication
 
 ### Sprint 3: Sharing & Favorites ✅ PARTIALLY COMPLETE
-- [x] Generate shareable links with tokens (shareToken field added) ✅
-- [x] Public trip viewing (read-only) ✅
+- [x] Generate shareable links with tokens (shareToken field added)
+- [x] Public trip viewing (read-only)
 - [ ] Favorites system for places/restaurants
 - [ ] User activity tracking
 
