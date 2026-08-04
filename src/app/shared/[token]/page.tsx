@@ -10,7 +10,7 @@ import { TripSummary } from '@/components/TripSummary';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Share2, Download, ArrowLeft, MapPin, Utensils, Calendar } from 'lucide-react';
+import { Share2, Download, ArrowLeft, MapPin, Utensils, Calendar, MessageCircle } from 'lucide-react';
 import { TripWithDetails } from '@/lib/types';
 import { LoadingState } from '@/components/LoadingState';
 
@@ -77,10 +77,8 @@ export default function SharedTripPage() {
             This shared link is invalid or the trip is no longer available.
           </p>
           <Button asChild>
-            <Button asChild>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Go Back
-            </Button>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Go Back
           </Button>
         </div>
       </div>
@@ -110,6 +108,21 @@ export default function SharedTripPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+        {/* Personal Notes (if exists) */}
+        {trip.notes && (
+          <Card className="mb-6 border-border bg-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageCircle className="h-5 w-5" />
+                Creator's Notes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-foreground whitespace-pre-wrap">{trip.notes}</p>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Trip Summary (Public View) */}
         <Card className="mb-6">
           <CardContent className="pt-6">
