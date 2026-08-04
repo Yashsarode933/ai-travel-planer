@@ -30,6 +30,82 @@ async function getAuthenticatedUser(request: NextRequest) {
   return user;
 }
 
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  try {
+    // Verify authentication
+    const user = await getAuthenticatedUser(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Trip ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // Check if it's a temp ID
+    if (id.startsWith('temp_')) {
+      return NextResponse.json(
+        { error: 'Temporary trips cannot be updated via API' },
+        { status: 400 }
+      );
+    }
+
+    // Check if trip exists
+    const existingTrip = await prisma.trip.findUnique({
+      where: { id },
+    });
+
+    if (!existingTrip) {
+      return NextResponse.json(
+        { error: 'Trip not found' },
+        { status: 404 }
+      );
+    }
+
+    // Verify ownership
+    if (existingTrip.userId !== user.id) {
+      return NextResponse.json(
+        { error: 'You do not have permission to update this trip' },
+        { status: 403 }
+      );
+    }
+
+    const body = await request.json();
+    const { notes, interests, travelDates, totalEstimatedCost } = body;
+
+    // Update trip
+    const updatedTrip = await prisma.trip.update({
+      where: { id },
+      data: {
+        notes: notes ?? existingTrip.notes,
+        interests: interests ?? existingTrip.interests,
+        travelDates: travelDates ?? existingTrip.travelDates,
+        totalEstimatedCost: totalEstimatedCost ?? existingTrip.totalEstimatedCost,
+      },
+      include: {
+        places: true,
+        restaurants: true,
+      },
+    });
+
+    return NextResponse.json(updatedTrip);
+  } catch (error) {
+    console.error('Error updating trip:', error);
+    return NextResponse.json(
+      { error: 'Failed to update trip' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 

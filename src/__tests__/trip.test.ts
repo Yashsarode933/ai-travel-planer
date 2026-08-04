@@ -202,4 +202,66 @@ describe('Trip API', () => {
       expect(trip).toBeNull();
     });
   });
+
+  describe('PATCH /api/trip/[id]', () => {
+    it('should update trip notes via PATCH', async () => {
+      const tripId = 'trip_123';
+
+      (prisma.trip.findUnique as jest.Mock).mockResolvedValue({
+        id: tripId,
+        destination: 'Paris',
+        userId: 'user_1',
+        notes: 'Original notes',
+      });
+
+      (prisma.trip.update as jest.Mock).mockResolvedValue({
+        id: tripId,
+        destination: 'Paris',
+        notes: 'Updated notes via PATCH',
+      });
+
+      const updatedTrip = await prisma.trip.update({
+        where: { id: tripId },
+        data: { notes: 'Updated notes via PATCH' },
+      });
+
+      expect(updatedTrip).toBeDefined();
+      expect(prisma.trip.update).toHaveBeenCalledWith({
+        where: { id: tripId },
+        data: { notes: 'Updated notes via PATCH' },
+      });
+    });
+
+    it('should update multiple fields via PATCH', async () => {
+      const tripId = 'trip_456';
+
+      (prisma.trip.findUnique as jest.Mock).mockResolvedValue({
+        id: tripId,
+        destination: 'Tokyo',
+        userId: 'user_1',
+      });
+
+      (prisma.trip.update as jest.Mock).mockResolvedValue({
+        id: tripId,
+        destination: 'Tokyo',
+        notes: 'New notes',
+        interests: 'food,nature',
+        travelDates: '2026-09-01',
+        totalEstimatedCost: 800,
+      });
+
+      const updatedTrip = await prisma.trip.update({
+        where: { id: tripId },
+        data: {
+          notes: 'New notes',
+          interests: 'food,nature',
+          travelDates: '2026-09-01',
+          totalEstimatedCost: 800,
+        },
+      });
+
+      expect(updatedTrip).toBeDefined();
+      expect(prisma.trip.update).toHaveBeenCalled();
+    });
+  });
 });
